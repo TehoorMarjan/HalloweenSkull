@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <esp_sleep.h>
 #include <Eyes.h>
 #include "config.h"
 
@@ -125,5 +126,6 @@ void loop()
 {
   animateEyes();
 
-  delay(25); // Small delay to avoid excessive updates
+  esp_sleep_enable_timer_wakeup(25 * 1000); // 25ms in microseconds
+  esp_light_sleep_start();
 }
