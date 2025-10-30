@@ -58,7 +58,7 @@ void setup()
   Serial.begin(115200);
   eyes.begin();
   eyes.immediatePosition(3, 3); // Center
-  eyes.setBrightness(8);        // Medium brightness
+  eyes.setBrightness(EYES_BRIGHTNESS);
   eyes.immediateMode(CLOSED);
   eyes.requestMode(NORMAL); // Start with animation of opening eyes
 }

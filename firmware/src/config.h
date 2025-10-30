@@ -14,4 +14,6 @@
 #define MIN_RANDOM_DELAY_CLOSED 3000 // Minimum random delay between CLOSED mode animations (ms)
 #define MAX_RANDOM_DELAY_CLOSED 6000 // Maximum random delay between CLOSED mode animations (ms)
 
+#define EYES_BRIGHTNESS 4 // Default display brightness (0-15)
+
 #endif // CONFIG_H
