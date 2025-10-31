@@ -29,7 +29,7 @@
     .effectFolder = 3, \
     .yawningNbSounds = 3, \
     .speechNbSounds = 9, \
-    .effectNbSounds = 7 \
+    .effectNbSounds = 6 \
 }
 
 #define MIN_SOUND_DELAY 20000 // Minimum delay between sounds (ms)

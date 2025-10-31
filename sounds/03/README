@@ -1,0 +1,64 @@
+# Sound Effects - Folder 03
+
+## ⚠️ Licensing Notice
+
+The sound effects in this folder are sourced from **Pixabay** and are subject to
+their content license terms. Due to licensing restrictions, these audio files
+**cannot be redistributed** as part of this repository.
+
+## 🎵 For Your Own Use
+
+If you're building this project yourself, you are **free to download and use**
+sound effects from Pixabay or other free sound libraries for your personal
+Halloween skull project.
+
+### Recommended Free Sound Libraries
+
+1. **[Pixabay](https://pixabay.com/sound-effects/)** - Free for personal and
+   commercial use
+
+   - Search terms: "horror", "scary", "creepy", "halloween", "scream", "laugh"
+
+2. **[Freesound.org](https://freesound.org/)** - CC-licensed sound effects
+
+   - Requires attribution for some sounds
+
+3. **[Zapsplat](https://www.zapsplat.com/)** - Free with attribution
+
+   - Large collection of horror/Halloween sounds
+
+4. **[BBC Sound Effects](https://sound-effects.bbcrewind.co.uk/)** - Free for
+   personal use
+   - High-quality professional recordings
+
+### File Naming Convention
+
+Files must follow the DFPlayer Mini naming convention:
+
+```
+03/
+├── 001.mp3  (e.g., evil laugh)
+├── 002.mp3  (e.g., scream)
+├── 003.mp3  (e.g., creepy whisper)
+└── 004.mp3  (e.g., chains rattling)
+```
+
+**Format Requirements:**
+
+- MP3 or WAV format
+- Sample rate: 16kHz-48kHz recommended
+- Bitrate: up to 320kbps
+- Files numbered with 3 digits (001, 002, 003, etc.)
+
+### Tips for Best Results
+
+- Keep files short (2-10 seconds) for quick impact
+- Normalize volume levels across all files
+- Test on your actual speaker to ensure clarity
+- Consider your skull's acoustic properties (muffled vs. clear)
+
+---
+
+**Note**: Always respect content licenses and terms of use when downloading
+sound effects. If unsure, use content explicitly marked as "Public Domain" or
+"CC0".
