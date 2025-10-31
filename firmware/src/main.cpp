@@ -1,13 +1,21 @@
 #include <Arduino.h>
 #include <esp_sleep.h>
+#include <DFRobotDFPlayerMini.h>
+#include <HardwareSerial.h>
 #include <Eyes.h>
+#include <Sounds.h>
 #include "config.h"
 
-// Define hardware type (use GENERIC if unsure, or FC16_HW for common modules)
-#define HARDWARE_TYPE MD_MAX72XX::FC16_HW
+void animateEyes();
+void maybePlaySound(bool yawn = false);
+
+static const SoundsConfig soundConfig = DFPLAYER_CONFIG;
 
 // Create Eyes object
 Eyes eyes(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN);
+
+// Create DFPlayer object
+Sounds sounds(DFPLAYER_RX, DFPLAYER_TX);
 
 enum EyePosition
 {
@@ -53,15 +61,35 @@ EyeMode currentMode = NORMAL;
 unsigned long lastAnimationEndTime = 0;
 unsigned long randomDelay = 0;
 
+unsigned long lastSoundTime = 0;
+unsigned long soundDelay = 0;
+
+bool dfPlayerAvailable = false;
+
 void setup()
 {
   // Initialize serial communication
   Serial.begin(115200);
+  
+  // Initialize DFPlayer
+  sounds.begin(soundConfig);
+  
+  // Initialize eyes
   eyes.begin();
   eyes.immediatePosition(3, 3); // Center
   eyes.setBrightness(EYES_BRIGHTNESS);
   eyes.immediateMode(CLOSED);
   eyes.requestMode(NORMAL); // Start with animation of opening eyes
+}
+
+void loop()
+{
+  animateEyes();
+  maybePlaySound();
+  delay(25);
+  // Below breaks dfPlayer operation
+  //esp_sleep_enable_timer_wakeup(25 * 1000); // 25ms in microseconds
+  //esp_light_sleep_start();
 }
 
 void animateEyes()
@@ -110,6 +138,7 @@ void animateEyes()
     if (action < CLOSED_MODE_PROBABILITY)
     {
       currentMode = CLOSED;
+      maybePlaySound(true);
     }
   }
   eyes.requestMode(currentMode);
@@ -122,10 +151,35 @@ void animateEyes()
   }
 }
 
-void loop()
+void maybePlaySound(bool yawn)
 {
-  animateEyes();
+  unsigned long now = millis();
+  if (now - lastSoundTime < soundDelay)
+  {
+    if (!yawn)
+    {
+      return; // Not time yet
+    }
+    else
+    {
+      // Allow yawns to proceed even if sound delay not yet passed
+      // But only if minimum yawning interval has passed
+      if (now - lastSoundTime < MIN_YAWNING_INTERVAL)
+      {
+        return; // Not enough time since last sound, cancel yawn
+      }
+    }
+  }
 
-  esp_sleep_enable_timer_wakeup(25 * 1000); // 25ms in microseconds
-  esp_light_sleep_start();
+  lastSoundTime = now;
+  if (yawn)
+  {
+    sounds.playYawningSound();
+  }
+  else
+  {
+    sounds.playSpeechOrEffectSound();
+  }
+
+  soundDelay = random(MIN_SOUND_DELAY, MAX_SOUND_DELAY);
 }
